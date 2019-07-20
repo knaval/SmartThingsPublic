@@ -1,4 +1,3 @@
-
 definition(
     name: "Sonoff-Tasmota RF Bridge",
     namespace: "BrettSheleski",
