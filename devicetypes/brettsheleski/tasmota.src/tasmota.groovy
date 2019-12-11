@@ -134,11 +134,9 @@ def spawnChildDevices(){
         log.debug "GPIO: ${state.gpio}"
         log.debug "Module: ${state.module}"
         
-        def moduleId = state.module.split()[0].toInteger();
-        
+        def moduleId = state.module.keySet()[0].toInteger();
+	    
         def devices = getModuleDevices(moduleId) << getGpioDevices(state.gpio);
-
-        
 
         def existingDevices = getChildDevices();
         def deviceConfig = null;
@@ -199,7 +197,8 @@ def getModuleDevices(moduleId){
 
     switch (moduleId){
 
-        case 1: // Sonoff Basic
+        case 0: // Sonoff Mini
+	case 1: // Sonoff Basic
 
         // the next batch are mostly guesses if they work.  
         //  I'm assuming they will provide basic functionality until more specific implementations are done
@@ -307,10 +306,7 @@ def getGpioDevices(gpios){
             continue;
         }
 
-		startIndex = e.value.indexOf('(', 0) + 1;
-		endIndex = e.value.indexOf(')', startIndex);
-
-        switch(e.value.substring(startIndex, endIndex).toLowerCase()){
+	switch(e.value.values()[0].toLowerCase()){
 
 			case "relay1":
 			case "relay1i":
